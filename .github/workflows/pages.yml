@@ -1,0 +1,26 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Este workflow será acionado sempre que houver um push para a branch 'main'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # O ambiente onde o job será executado (um servidor virtual do GitHub)
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # Baixa o código do seu repositório para o ambiente do GitHub Actions
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5 # Configura o ambiente necessário para o GitHub Pages
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4 # Cria um 'artefato' (um pacote) com os arquivos do seu site
+        with:
+          path: './' # Este é o mais importante! Ele diz para publicar TODO o conteúdo da raiz do seu repositório.
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # Publica o artefato que foi criado no GitHub Pages
